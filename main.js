@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('node:path');
+const {net} = require('electron');
 
 const createWindow = () => {
   const win = new BrowserWindow({
@@ -15,7 +16,13 @@ const createWindow = () => {
 
 async function urlSubmit(event, url) {
   console.log(`i got a url: ${url}`);
-  return `url recieved: ${url}`;
+  const response = await net.fetch(url);
+  if (response.ok) {
+    const body = await response.text()
+    return body;
+  } else {
+    return `error! ${url} is not a valid URL`
+  }
 }
 
 app.whenReady().then(() => {
