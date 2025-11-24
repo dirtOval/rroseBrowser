@@ -11,5 +11,10 @@
   },
   "devDependencies": {
     "electron": "^39.1.1"
+  },
+  "dependencies": {
+    "html-midi-player": "^1.6.0",
+    "node-html-parser": "^7.0.1",
+    "scribbletune": "^5.1.0"
   }
 }

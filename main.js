@@ -1,6 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('node:path');
 const {net} = require('electron');
+const {parse} = require('node-html-parser');
 
 const createWindow = () => {
   const win = new BrowserWindow({
@@ -19,7 +20,16 @@ async function urlSubmit(event, url) {
   const response = await net.fetch(url);
   if (response.ok) {
     const body = await response.text()
-    return body;
+    const dom = parse(body, {
+      blockTextElements: {
+        script: true,
+        noscript: true,
+        style: true,
+        pre: true
+      }
+    });
+
+    return dom.toString();
   } else {
     return `error! ${url} is not a valid URL`
   }
