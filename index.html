@@ -1,26 +1,13 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'"
-    />
-    <meta
-      http-equiv="X-Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'"
-    />
-    <link rel="stylesheet" type="text/css" href="styles.css">
-    <title>Rrose Browser</title>
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + TS</title>
   </head>
   <body>
-    <h1>Time To Browse The World Wide Web!</h1>
-    <input type="text" id="url-input" />
-    <label for="url-input">Input URL</label>
-    <button id='url-button' type="button">Go</button>
-    <p>response:</p>
-    <p id="response"></p>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
   </body>
-  <script src="./renderer.js"></script>
 </html>
