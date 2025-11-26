@@ -1,7 +1,9 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, ipcMain, net } from 'electron'
 import { createRequire } from 'node:module'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
+import {parse} from 'node-html-parser';
+// const {parse} = require('node-html-parser');
 
 const require = createRequire(import.meta.url)
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -28,7 +30,9 @@ let win: BrowserWindow | null
 
 function createWindow() {
   win = new BrowserWindow({
-    icon: path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'),
+    width: 600,
+    height: 300,
+    // icon: path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.mjs'),
     },
@@ -44,6 +48,26 @@ function createWindow() {
   } else {
     // win.loadFile('dist/index.html')
     win.loadFile(path.join(RENDERER_DIST, 'index.html'))
+  }
+}
+
+async function urlSubmit(event, url) {
+  console.log(`i got a url: ${url}`);
+  const response = await net.fetch(url);
+  if (response.ok) {
+    const body = await response.text()
+    const dom = parse(body, {
+      blockTextElements: {
+        script: true,
+        noscript: true,
+        style: true,
+        pre: true
+      }
+    });
+
+    return dom.toString();
+  } else {
+    return `error! ${url} is not a valid URL`
   }
 }
 
@@ -65,4 +89,10 @@ app.on('activate', () => {
   }
 })
 
-app.whenReady().then(createWindow)
+app.whenReady().then(() => {
+  const {net} = require('electron');
+  console.log('im ready :)');
+  ipcMain.handle('url-submit', urlSubmit)
+  createWindow();
+})
+//app.whenReady().then(createWindow)

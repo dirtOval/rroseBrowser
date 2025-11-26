@@ -21,4 +21,8 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
 
   // You can expose other APTs you need here.
   // ...
+  // idk what any of the stuff above this is
+  // wait a second this might be superfluous. let me test
+  //here is the old stuff
+  urlSubmit: (url) => ipcRenderer.invoke('url-submit', url),
 })

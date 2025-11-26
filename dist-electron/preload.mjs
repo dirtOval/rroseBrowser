@@ -16,7 +16,11 @@ electron.contextBridge.exposeInMainWorld("ipcRenderer", {
   invoke(...args) {
     const [channel, ...omit] = args;
     return electron.ipcRenderer.invoke(channel, ...omit);
-  }
+  },
   // You can expose other APTs you need here.
   // ...
+  // idk what any of the stuff above this is
+  // wait a second this might be superfluous. let me test
+  //here is the old stuff
+  urlSubmit: (url) => electron.ipcRenderer.invoke("url-submit", url)
 });
