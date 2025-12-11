@@ -1,4 +1,6 @@
 import './style.css'
+// import * as Tone from 'tone';
+import {startTone} from './tone';
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>
@@ -19,13 +21,22 @@ const toneButton = document.getElementById('tone-button');
 
 //deirdre: this isn't working because you need a bundler to wrap npm modules into the browser.
 //try out vite.
-//const Tone = window.electronAPI.Tone;
 
 urlButton.addEventListener('click', async () => {
   const url = urlInput.value;
   const response = await window.ipcRenderer.urlSubmit(url);
   responseP.innerText = response;
 
+})
+
+// const synth = new Tone.Synth().toDestination();
+// const loop = new Tone.Loop((time) => {
+//   synth.triggerAttackRelease('C5', '16n', time);
+// }, '8n').start(0);
+
+toneButton.addEventListener('click', async () => {
+  // await Tone.getTransport().start();
+  startTone();
 })
 
 // Use contextBridge

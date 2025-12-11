@@ -23,3 +23,7 @@ urlButton.addEventListener('click', async () => {
 // toneButton.addEventListener('click', async () => {
 //   await Tone.getTransport().start();
 // })
+
+//IS THIS FILE SUPERFLUOUS RN? IT SHOULD NOT BE. WE NEED SEPARATION.
+//or rather, if not this file we probably shouldn't be doing everything on main.ts.
+//keep it for now, but i could see getting rid of this thing if i don't find a use for it
